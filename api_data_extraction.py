@@ -1,0 +1,20 @@
+import json
+from urllib2 import Request, urlopen 
+
+#npi_number_list for demo...
+npi_number_list = ['1205910528','1306856018','1407082308','1154652741']
+
+def extract_data_from_api(api_name):
+	#sent the request to api...
+	request=Request(api_name)
+	response = urlopen(request)
+	#read the data from api...
+	elevations = response.read()
+	#split data by newline...
+	elevations.splitlines()
+	#get the data in json...
+	data = json.loads(elevations)  
+	return data
+	
+for npi_num in npi_number_list:
+	print extract_data_from_api('http://www.npinumberlookup.org/getResultDetails.php?npinum='+npi_num)
